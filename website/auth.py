@@ -18,22 +18,26 @@ def signup():
         email = request.form.get('email')
         fname = request.form.get('fname')
         lname = request.form.get('lname')
-        password1 = request.form.get('password1')
-        password2 = request.form.get('password2')
+        password1 = request.form.get(str('password1'))
+        password2 = request.form.get(str('password2'))
         # messages won't flash - takke up here tomorrow 
-        if len(email) < 4:
-            flash('Email must be greater than 4 characters', category='error')
-        elif len(fname) < 2:
+        if len(fname) < 2:
             flash('First name must be greater than 2 characters', category='error')
         elif len(lname) < 2:
             flash('Last name must be greater than 2 characters', category='error')
-        elif password1 != password2:
+        elif len(email) <= 7:
+            flash('Email must be greater than 4 characters', category='error')
+#
+# ------ something is wrong in this area --------->
+#
+        elif len(str(password1)) < 8:
+            flash('Password is too short.  Must be at least 8 characters', category='error') 
+        elif (str(password1)) != (str(password2)):
             flash('Passwords do not match', category='error')
-        elif password1 < 8:
-            flash('Password is too short.  Must be greater than 8 characters', category='error')
+          
         else:
             flash('Account created', category = 'success')
-            pass
+       
         
             
     return render_template('signup.html')
